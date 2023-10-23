@@ -52,7 +52,7 @@ In order to simply get all Spice scripts in this GitHub repository use this set 
 ```
 mkdir SPICE
 cd SPICE
-git clone https://github.com/chrisbluemel/SPICE
+git clone https://github.com/BIONF/SPICE
 ```
 
 **IMPORTANT**: Running these scripts without access to a processing cluster will be more or less impossible. You can try to calculate 200k FAS comparisons on your personal computer, but it may take a very long time. Also be aware that the helper scripts to generate job arrays are only capable of generating SLURM job arrays.
