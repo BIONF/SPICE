@@ -177,11 +177,19 @@ def collect_sequences(gene_assembler: GeneAssembler,
     fasta_dict: Dict[str, Dict[str, str]] = fasta_iterator.get_fasta_dict()
 
     gene_list: List[Gene] = gene_assembler.get_genes()
-
     for gene in tqdm(gene_list, ncols=100,
                      total=len(gene_list), desc="Sequence collection progress"):
         protein_list: List[Protein] = gene.get_proteins()
+        if gene.get_id() not in fasta_dict.keys():
+            temp_id_list: List[str] = [transcript.get_id() for transcript in gene.get_transcripts()]
+            for transcript_id in temp_id_list:
+                gene.delete_transcript(transcript_id)
+            continue
         for protein in protein_list:
+            if protein.get_id() not in fasta_dict[gene.get_id()].keys():
+                print(fasta_dict[gene.get_id()])
+                gene.delete_transcript(protein.get_id())
+                continue
             protein.set_sequence(fasta_dict[gene.get_id()][protein.get_id()])
     gene_assembler.clear_empty_genes()
     gene_assembler.save_seq(pass_path)
